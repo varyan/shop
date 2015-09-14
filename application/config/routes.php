@@ -55,5 +55,3 @@ $route['translate_uri_dashes'] = FALSE;
 
 
 $route['(:any)'] = 'dashboard/view/$1';
-
-$route
