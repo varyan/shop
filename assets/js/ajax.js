@@ -6,12 +6,11 @@
 
 $(document).ready(function() {
 
-    $('#chooseCompany').change(function() {
+    $('#chooseCompany').keyup(function() {
         $('#waiting').show();
-        alert('karen');
         $.ajax({
             type: "POST",
-            data: 'kar',
+            data: {value:$('#chooseCompany').val()} ,
             url: 'http://localhost/shop/dashboard/getCompanies',
             dataType: 'html',
             success: function(response) {

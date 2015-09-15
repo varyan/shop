@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Karen
- * Date: 14.09.2015
- * Time: 10:00
- */
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Dashboard extends My_Controller {
 
@@ -14,9 +9,11 @@ class Dashboard extends My_Controller {
 
     public function __construct() {
         parent::__construct();
+        $this->load->model('company_model');
+        $this->load->model('product_model');
         $this->__setDataParams();
-        $this->load->database();
     }
+
 
     /** -------------------------------------
      *  @param string (default index)
@@ -31,6 +28,7 @@ class Dashboard extends My_Controller {
         }
     }
 
+
     /** -------------------------------------
      *  Redirect to newOrder view
      *  -------------------------------------
@@ -40,15 +38,91 @@ class Dashboard extends My_Controller {
     }
 
 
+
     /** -------------------------------------
-     *  Working with ajax for show the all companies
+     *  Working with ajax for show the all companies and current company name by input value
      *  -------------------------------------
      */
     public function getCompanies() {
-        /*Get some data from company)model*/
-        
-        $this->load->view('private/forGetCompanies');
+
+        $indexCompany = $this->company_model->getCompanyByName($_POST['value']);
+
+        if (!$indexCompany) {
+            $indexCompany[0]['name'] = $_POST['value'];
+        } else {
+            $indexCompany = false;
+        }
+
+        $this->load->view('private/forGetCompanies', array(
+            'companyList' => $this->data['companyList'],
+            'indexCompany' => $indexCompany
+            )
+        );
     }
+
+
+    /** -------------------------------------
+     *  Create new Company and redirect to it's page
+     * @param string
+     *  -------------------------------------
+     */
+    public function createCompany($data) {
+
+        $this->company_model->createNewCompany($data);
+
+        $this->session->set_userdata(
+            array(
+                 'companyId' => $this->db->insert_id()
+            )
+        );
+
+        redirect('CompanyPage');
+
+    }
+
+
+    /** -------------------------------------
+     *  Working with ajax for show products by input value
+     *  -------------------------------------
+     */
+    public function getProducts() {
+
+        $data = $this->input->post('value');
+
+        $this->load->view('private/forGetProducts', array(
+                'productList' => $this->product_model->getProducts($data)
+            )
+        );
+    }
+
+    /** -------------------------------------
+     *  Working with ajax for show current product
+     *  -------------------------------------
+     */
+    public function showProductInfo() {
+
+        print_r($this->input->post());
+
+        /*$this->load->view('private/forSelectProduct', array(
+                'product' => $data
+            )
+        );*/
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -60,10 +134,18 @@ class Dashboard extends My_Controller {
      */
     private function __setDataParams() {
         $this->data = array(
-            '' => '',
-            ' ' => '',
-            '  ' => ''
+           'companyList' => $this->company_model->getCompanyList(),
         );
+    }
+
+    /** -------------------------------------
+     *  SET $data parameters for any action
+     * @param string
+     * @parem string
+     *  -------------------------------------
+     */
+    private function __setUniqueDataParam($key, $value) {
+
     }
 
 

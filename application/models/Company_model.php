@@ -1,40 +1,42 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Karen
- * Date: 14.09.2015
- * Time: 22:16
- */
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Company_model extends My_Model {
-
-    /** -------------------------------------
-     *  Working with this table
-     *  -------------------------------------
-     */
-    private $_table = false;
-
 
     /** -------------------------------------
      *  Create construct and set table
      *  @param string
      *  -------------------------------------
      */
-    public function __construct($table = 'company') {
-        parent::__construct();
-        $this->setTable($table);
-    }
-
-    public function getCompanyByName() {
-
+    public function __construct() {
+        parent::__construct('company');
     }
 
     /** -------------------------------------
-     *  @param string
+     *  Select All Companies list from DB
      *  -------------------------------------
      */
-    public function setTable() {
-        $this->_table = $table;
+    public function getCompanyList() {
+        return $this->select("id, name");
+    }
+
+    /** -------------------------------------
+     *  Select Index Company from DB
+     *  -------------------------------------
+     */
+    public function getCompanyByName($name) {
+        return $this->select("id, name", array('name' => $name));
+    }
+
+    /** -------------------------------------
+     *  Select Index Company from DB
+     *  -------------------------------------
+     */
+    public function createNewCompany($data) {
+        $this->insert(array(
+                'name' => $data
+            )
+        );
     }
 
 }

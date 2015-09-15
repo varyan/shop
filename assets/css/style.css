@@ -5,3 +5,24 @@
 #waiting {
     display: none;
 }
+
+#priceInput, #QtyInput {
+    width: 60px;
+}
+
+button[name='chooseItem'] {
+    background: transparent;
+    border: none;
+}
+
+#showForms {
+    display: none;
+}
+
+#step2 {
+    display: none;
+}
+
+.openform {
+    display: none;
+}

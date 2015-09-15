@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Karen
- * Date: 14.09.2015
- * Time: 21:23
- */
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class My_Controller extends CI_Controller {
 
@@ -22,7 +17,6 @@ class My_Controller extends CI_Controller {
      * @param array
      * @param string (default success)
      * @param string (default success saved)
-     *
      * @return array (JSON)
      * ---------------------------------------
      */
