@@ -19,10 +19,41 @@ button[name='chooseItem'] {
     display: none;
 }
 
+.openform {
+    display: none;
+    z-index: 1;
+}
+
+#dataInfo {
+    display: none;
+}
+
+.white {
+    background: burlywood;
+}
+
 #step2 {
     display: none;
 }
 
-.openform {
+
+#step3 {
     display: none;
 }
+
+#submit {
+    display: none;
+}
+
+#back {
+    display: none;
+}
+
+
+
+
+
+
+
+
+

@@ -7,38 +7,46 @@
 $(document).ready(function() {
 
     $('#chooseProduct').keyup(function() {
+        $('#products').show();
         $.ajax({
             type: "POST",
             data: {value:$('#chooseProduct').val()} ,
             url: 'http://localhost/shop/dashboard/getProducts',
-            dataType: 'html',
+            dataType: 'json',
             success: function(response) {
-                $('#products').html(response);
+                $('#products').html(response['message']);
             }
         })
+    });
+
+    $('#chooseProduct').blur(function() {
+        /*$('#products').hide();*/
     });
 
 
     $(document).on('submit','.form', function(e) {
         e.preventDefault();
+        $('#products').hide();
+        $('#dataInfo').show();
         var sendData = $(this).serialize();
-        Request('dashboard/showProductInfo',sendData);
+        Request('http://localhost/shop/dashboard/selectProduct',sendData);
     });
 
 
-    $('#next').click(function() {
-        $('#step1').hide();
-        $('#step2').show();
+
+    $('#cartForm input, #cartForm select').on('click keyup', function () {
+        var form = $('#cartForm').serialize();
+        $.ajax({
+            url: 'http://localhost/shop/dashboard/setOtherParams',
+            type: "post",
+            data: form,
+            dataType: 'html',
+            success: function(response) {
+                $('#shipInfo').html('($' + response +')');
+                $('.total').html(response);
+            }
+        })
     });
-
-
-    $('#step2').find('li').click(function() {
-        $(this).find('.openform').slideToggle();
-        $(this).find('span').attr('class', 'glyphicon glyphicon-arrow-down')
-    })
-
-
-
 
 });
 
@@ -48,8 +56,9 @@ function Request(url,data){
         url:url,
         data:data,
         type:"POST",
+        dataType: 'html',
         success: function (response) {
-            console.log(response);
+            $('#selectedProducts').append(response);
         }
     });
 }

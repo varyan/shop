@@ -11,7 +11,11 @@ class Dashboard extends My_Controller {
         parent::__construct();
         $this->load->model('company_model');
         $this->load->model('product_model');
+        $this->load->library('cart');
         $this->__setDataParams();
+        /* $this->cart->destroy();
+         $this->session->start();
+         $this->session->destroy();*/
     }
 
 
@@ -30,7 +34,7 @@ class Dashboard extends My_Controller {
 
 
     /** -------------------------------------
-     *  Redirect to newOrder view
+     *  Go to NewOrder page
      *  -------------------------------------
      */
     public function newOrder() {
@@ -38,6 +42,41 @@ class Dashboard extends My_Controller {
     }
 
 
+    /** -------------------------------------
+     * Go to Company page
+     * @param string
+     *  -------------------------------------
+     */
+    public function OpenCompanyPage($data) {
+
+        if (!$this->session->companyId) {
+            $this->session->set_userdata('companyId',NULL);
+        }
+
+        $this->session->companyId = $data;
+
+        redirect('CompanyPage');
+
+    }
+
+    /** -------------------------------------
+     * Create new Company and redirect to it's page
+     * @param string
+     *  -------------------------------------
+     */
+    public function createCompany($data) {
+
+        $this->company_model->createNewCompany($data);
+
+        if (!$this->session->companyId) {
+            $this->session->set_userdata('companyId',NULL);
+        }
+
+        $this->session->companyId = $this->db->insert_id();
+
+        redirect('CompanyPage');
+
+    }
 
     /** -------------------------------------
      *  Working with ajax for show the all companies and current company name by input value
@@ -60,26 +99,13 @@ class Dashboard extends My_Controller {
         );
     }
 
-
     /** -------------------------------------
-     *  Create new Company and redirect to it's page
-     * @param string
+     *  Working with ajax for show Order info
      *  -------------------------------------
      */
-    public function createCompany($data) {
-
-        $this->company_model->createNewCompany($data);
-
-        $this->session->set_userdata(
-            array(
-                 'companyId' => $this->db->insert_id()
-            )
-        );
-
-        redirect('CompanyPage');
-
+    public function reviewOrder() {
+        $this->load->view('private/forReview');
     }
-
 
     /** -------------------------------------
      *  Working with ajax for show products by input value
@@ -99,33 +125,79 @@ class Dashboard extends My_Controller {
      *  Working with ajax for show current product
      *  -------------------------------------
      */
-    public function showProductInfo() {
+    public function selectProduct() {
 
-        print_r($this->input->post());
+        $data = array(
+            'id'      => $this->input->post('id'),
+            'qty'     => $this->input->post('qty'),
+            'price'   => $this->input->post('price'),
+            'name'    => $this->input->post('productName'),
+            'totalDiscount' => 0,
+            'totalDiscountType' => 'money',
+            'tax' => 0,
+            'shippingPrice' => 0,
+            'shippingDiscount' => 0,
+            'shippingDiscountType' => 'money'
 
-        /*$this->load->view('private/forSelectProduct', array(
-                'product' => $data
+        );
+
+        $this->cart($data);
+
+        $response = $this->input->post();
+        $this->load->view('private/forSelectProduct', array(
+                'product' => $response
             )
-        );*/
+        );
     }
 
+    /** -------------------------------------
+     *
+     *  -------------------------------------
+     */
+    public function setOtherParams() {
+
+        $this->changeCart('totalDiscount',$this->input->post('totalDiscount'));
+        $this->changeCart('totalDiscountType',$this->input->post('totalDiscountType'));
+        $this->changeCart('tax',$this->input->post('tax'));
+        $this->changeCart('shippingPrice',$this->input->post('shippingPrice'));
+        $this->changeCart('shippingDiscount',$this->input->post('shippingDiscount'));
+        $this->changeCart('shippingDiscountType',$this->input->post('shippingDiscountType'));
+
+        echo $this->input->post('shippingPrice');
+    }
+
+    /** -------------------------------------
+     *  Process and validate FORM
+     *  -------------------------------------
+     */
+    public function processingForm() {
+        /*AT first must validate form params then set all of them in session*/
+
+        $this->load->library('My_Form_Validation');
+        exit;
+        if ($this->My_Validator->validate( $this->input->post() ) ) {
+
+            foreach($this->input->post() as $key => $value) {
+                $this->session->set_userdata($key, $value);
+            };
+
+            echo $this->json(array(),'Success', 'The form has been validate');
 
 
+        } else {
+            echo $this->json(array(),'Success', 'ERROR');
+        }
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /** -------------------------------------
+     *  Create order using cart-info and form-info
+     *  -------------------------------------
+     */
+    public function createOrder() {
+        /*MUST FILL THE DATABASE then redirect*/
+        /*$this->session->destroy();*/
+        redirect('index');
+    }
 
 
     /** -------------------------------------
@@ -139,16 +211,25 @@ class Dashboard extends My_Controller {
     }
 
     /** -------------------------------------
-     *  SET $data parameters for any action
-     * @param string
-     * @parem string
+     *  Open Cart and Fill
      *  -------------------------------------
      */
-    private function __setUniqueDataParam($key, $value) {
-
+    private function cart($data) {
+        $row_id = $this->cart->insert($data);
+        $this->session->set_userdata('row_id',$row_id);
     }
 
-
-
-
+    /** -------------------------------------
+     *  change Cart
+     * @param string
+     * @param array
+     *  -------------------------------------
+     */
+    private function changeCart($row,$data) {
+        $this->cart->update(array(
+                'rowid' => $this->session->userdata('row_id'),
+                $row => $data
+            )
+        );
+    }
 }
