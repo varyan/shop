@@ -17,7 +17,7 @@ class Company_model extends My_Model {
      *  -------------------------------------
      */
     public function getCompanyList() {
-        return $this->select("id, name");
+        return $this->select("id, companyName");
     }
 
     /** -------------------------------------
@@ -25,7 +25,7 @@ class Company_model extends My_Model {
      *  -------------------------------------
      */
     public function getCompanyByName($name) {
-        return $this->select("id, name", array('name' => $name));
+        return $this->select("id, companyName", array('companyName' => $name));
     }
 
     /** -------------------------------------
@@ -34,7 +34,7 @@ class Company_model extends My_Model {
      */
     public function createNewCompany($data) {
         $this->insert(array(
-                'name' => $data
+                'companyName' => $data
             )
         );
     }

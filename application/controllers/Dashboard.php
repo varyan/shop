@@ -13,9 +13,9 @@ class Dashboard extends My_Controller {
         $this->load->model('product_model');
         $this->load->library('cart');
         $this->__setDataParams();
-        /* $this->cart->destroy();
-         $this->session->start();
-         $this->session->destroy();*/
+
+        /*  $this->cart->destroy();
+            session_destroy(); */
     }
 
 
@@ -24,11 +24,13 @@ class Dashboard extends My_Controller {
      *  -------------------------------------
      */
     public function view($page = 'index') {
+        $this->data['content']['title'] = ucfirst($page);
         if( !file_exists(VIEWPATH.'admin/pages/'.$page.'.php'))
         {
             show_404();
         } else {
-            $this->load->view('admin/pages/'.$page);
+            $this->data['content']['page'] = $page;
+            $this->load->view('admin/includes/content',$this->data['content']);
         }
     }
 
@@ -41,6 +43,14 @@ class Dashboard extends My_Controller {
         redirect(base_url('newOrder'));
     }
 
+
+    /** -------------------------------------
+     *  Go to NewOrder page
+     *  -------------------------------------
+     */
+    public function cancel() {
+        redirect(base_url('index'));
+    }
 
     /** -------------------------------------
      * Go to Company page
@@ -61,12 +71,12 @@ class Dashboard extends My_Controller {
 
     /** -------------------------------------
      * Create new Company and redirect to it's page
-     * @param string
+     * @param string $comp_name
      *  -------------------------------------
      */
-    public function createCompany($data) {
+    public function createCompany($comp_name) {
 
-        $this->company_model->createNewCompany($data);
+        $this->company_model->createNewCompany($comp_name);
 
         if (!$this->session->companyId) {
             $this->session->set_userdata('companyId',NULL);
@@ -77,6 +87,12 @@ class Dashboard extends My_Controller {
         redirect('CompanyPage');
 
     }
+
+
+    /** --------------------------------------------------------------------------------
+     * FUNCTIONS WHITCH ARE WORKNG WITH AJAX
+     *  --------------------------------------------------------------------------------
+     */
 
     /** -------------------------------------
      *  Working with ajax for show the all companies and current company name by input value
@@ -93,11 +109,22 @@ class Dashboard extends My_Controller {
         }
 
         $this->load->view('private/forGetCompanies', array(
-            'companyList' => $this->data['companyList'],
-            'indexCompany' => $indexCompany
+                'companyList' => $this->data['companyList'],
+                'indexCompany' => $indexCompany
             )
         );
     }
+
+    /** -------------------------------------
+     *  Working with ajax for show info from Company form in Ship To div#ship1
+     *  -------------------------------------
+     */
+    public function showCompanyInfo() {
+        $this->load->view('private/forship1', array('info' => $this->input->post()
+            )
+        );
+    }
+
 
     /** -------------------------------------
      *  Working with ajax for show Order info
@@ -149,6 +176,9 @@ class Dashboard extends My_Controller {
             )
         );
     }
+    public function setQty() {
+        $this->changeCart('qty', $this->input->post('value'));
+    }
 
     /** -------------------------------------
      *
@@ -171,22 +201,151 @@ class Dashboard extends My_Controller {
      *  -------------------------------------
      */
     public function processingForm() {
-        /*AT first must validate form params then set all of them in session*/
 
-        $this->load->library('My_Form_Validation');
-        exit;
-        if ($this->My_Validator->validate( $this->input->post() ) ) {
+
+        if ($this->validate(array(
+            array(
+                'companyName','companyName','required'
+            ),
+            array(
+                'companyPhone', 'companyPhone', 'numeric'
+            ),
+            array(
+                'companyExt','companyExt','numeric'
+            ),
+            array(
+                'companyFax','companyFax','numeric'
+            ),
+            array(
+                'companyCustomer', 'companyCustomer','required'
+            ),/*
+                    array(
+                        'companyNotes', 'companyNotes',
+                    ),
+                    array(
+                        'companyAdminNotes', 'companyAdminNotes',
+                    ),*/
+            array(
+                'contactFname','contactFname','required'
+            ),
+            array(
+                'contactLname','contactLname','required'
+            ),
+            array(
+                'contactEmail', 'contactEmail','required|valid_email'
+            ),/*
+                    array(
+                        'contactTitle', 'contactTitle',
+                    ),*/
+            array(
+                'contactPhone', 'contactPhone','numeric'
+            ),
+            array(
+                'contactExt','contactExt','numeric'
+            ),
+            array(
+                'shipAddress1','shipAddress1','required'
+            ),/*
+                    array(
+                        'shipAddress2','shipAddress2',
+                    ),*/
+            array(
+                'shipCity','shipCity','required'
+            ),
+            array(
+                'shipState','shipState','required'
+            ),
+            array(
+                'shipZip','shipZip','required|numeric'
+            ),/*
+                    array(
+                        'shipCountry','shipCountry',
+                    ),*/
+            array(
+                'shipingCenter','shipingCenter','required'
+            ),
+            array(
+                'shippingType','shippingType','required'
+            ),/*
+                    array(
+                        'shipingStartDate','shipingStartDate',
+                    ),
+                    array(
+                        'shipingEndDate','shipingEndDate',
+                    ),
+                    array(
+                        'billingPONumber', 'billingPONumber',
+                    ),
+                    array(
+                        'billingPaymentTerms','billingPaymentTerms',
+                    ),*/
+            array(
+                'billingPermentType','billingPermentType','required'
+            ),
+            array(
+                'paymentNameOnCard','paymentNameOnCard','required'
+            ),
+            array(
+                'paymentCardName','paymentCardName','required'
+            ),
+            array(
+                'paymentSecurityCode','paymentSecurityCode','required|numeric'
+            ),
+            array(
+                'paymentBillingAddress','paymentBillingAddress','required'
+            ),
+            array(
+                'paymentCity','paymentCity','required'
+            ),
+            array(
+                'paymentState','paymentState','required'
+            ),
+            array(
+                'paymentZip','paymentZip','required|numeric'
+            ),
+            array(
+                'paymentExpDate','paymentExpDate','required'
+            ),/*
+                    array(
+                        'paymentDefaultCard','paymentDefaultCard',
+                    ),
+                    array(
+                        'additionaSafesRep','additionaSafesRep',
+                    ),
+                    array(
+                        'additionalPaymentTerms','additionalPaymentTerms',
+                    ),
+                    array(
+                        'additionalPaymentType','additionalPaymentType',
+                    ),
+                    array(
+                        'additionalSalesTax','additionalSalesTax',
+                    ),
+                    array(
+                        'additionalProfileId','additionalProfileId',
+                    ),
+                    array(
+                        'additionalB2BorB2C','additionalB2BorB2C',
+                    ),
+                    array(
+                        'additionalLeadSource','additionalLeadSource',
+                    ),
+                    array(
+                        'additionalResellerNumber','additionalResellerNumber',
+                    )*/
+                 )
+            )
+        ) {
 
             foreach($this->input->post() as $key => $value) {
                 $this->session->set_userdata($key, $value);
             };
 
-            echo $this->json(array(),'Success', 'The form has been validate');
-
-
+            echo $this->json(array(),'Success', 'SUCCESS');
         } else {
             echo $this->json(array(),'Success', 'ERROR');
         }
+
     }
 
     /** -------------------------------------
@@ -196,6 +355,9 @@ class Dashboard extends My_Controller {
     public function createOrder() {
         /*MUST FILL THE DATABASE then redirect*/
         /*$this->session->destroy();*/
+
+        $this->cart->destroy();
+        session_destroy();
         redirect('index');
     }
 
@@ -206,7 +368,7 @@ class Dashboard extends My_Controller {
      */
     private function __setDataParams() {
         $this->data = array(
-           'companyList' => $this->company_model->getCompanyList(),
+            'companyList' => $this->company_model->getCompanyList(),
         );
     }
 

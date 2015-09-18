@@ -6,18 +6,28 @@
 
 $(document).ready(function() {
 
+    /**
+     * ----------------------------------------------
+     *  Working when admin want choose company
+     * ----------------------------------------------
+     * */
     $('#chooseCompany').keyup(function() {
-        $('#waiting').show();
-        $.ajax({
-            type: "POST",
-            data: {value:$('#chooseCompany').val()} ,
-            url: 'http://localhost/shop/dashboard/getCompanies',
-            dataType: 'html',
-            success: function(response) {
-                $('#companies').html(response).show();
-                $('#waiting').hide();
-            }
-        })
+        var a = $('#chooseCompany').val();
+        if (!a) {
+            $('#companies').find('li:first').hide();
+        } else {
+            $('#waiting').show();
+            $.ajax({
+                type: "POST",
+                data: {value:$('#chooseCompany').val()} ,
+                url: 'http://localhost/shop/dashboard/getCompanies',
+                dataType: 'html',
+                success: function(response) {
+                    $('#companies').html(response).show();
+                    $('#waiting').hide();
+                }
+            })
+        };
     });
 
 });

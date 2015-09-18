@@ -14,14 +14,14 @@
                 <?php echo $product['productName']?>
             </div>
             <div class="form-group pull-right col-md-1">
-                <button id="chooseItem" type="submit" name="chooseItem" class="">Edit</button>
+                <button id="chooseItem1" type="submit" name="chooseItem1" class="">Edit</button>
             </div>
             <div class="form-group pull-right col-md-1">
                 $ <?= $product['price'] ?>
             </div>
             <div class="form-group pull-right col-md-2">
-                <label for="QtyInput">Qty</label>
-                <input class="form-control input-sm" id="QtyInput" type="text" value="<?= 1/*$product['qty']*/ ?>" name="qty" />
+                <label for="QtyInput1">Qty</label>
+                <input class="form-control input-sm" id="QtyInput1" type="text" value="<?= 1/*$product['qty']*/ ?>" name="qty" />
             </div>
             <div class="form-group pull-right">
                 Unit Price $: <?= $product['price'] ?>

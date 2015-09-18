@@ -55,3 +55,6 @@ $route['translate_uri_dashes'] = FALSE;
 
 
 $route['(:any)'] = 'dashboard/view/$1';
+
+//Client routes
+$route['client/cart/(:any)'] = 'client/client_cart/$1';

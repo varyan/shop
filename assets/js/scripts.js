@@ -3,7 +3,11 @@
  */
 
 var step = 1;
-
+/**
+ * ----------------------------------------------
+ *  Actions for #next button click
+ * ----------------------------------------------
+ * */
 $('#next').click(function() {
 
     step++;
@@ -29,12 +33,17 @@ $('#next').click(function() {
                 type: "post",
                 data: sendData,
                 url: 'http://localhost/shop/dashboard/processingForm',
-                dataType: 'html',
+                dataType: 'json',
                 success: function(response) {
-                    $('#processing').html('<p>'+ response +'</p>');
+                    $('#processing').html('<p>'+ response['message'] +'</p>');
                 }
             });
 
+            break;
+
+        }
+
+        case 4: {
             $.ajax({
                 type: "post",
                 data: {value:'true'},
@@ -44,14 +53,6 @@ $('#next').click(function() {
                     $('#step3').html(response);
                 }
             });
-
-
-
-            break;
-
-        }
-
-        case 4: {
             $('#step1').hide();
             $('#step2').hide();
             $('#step3').show();
@@ -62,6 +63,11 @@ $('#next').click(function() {
     }
 });
 
+/**
+ * ----------------------------------------------
+ *  Actions for #back button click
+ * ----------------------------------------------
+ * */
 $('#back').click(function() {
     step--;
     $('#submit').hide();
@@ -103,10 +109,14 @@ if (step == 1) {
 };
 
 
-/*OPEN FORMS*/
-$('#step2').find('li').find('span').click(function() {
+/**
+ * ----------------------------------------------
+ *  Open Forms
+ * ----------------------------------------------
+ * */
+ $('#step2').find('li').find('span').click(function() {
     $(this).parent().find('.openform').slideToggle();
-    $(this).parent().find('span:first').attr('class', 'glyphicon glyphicon-arrow-down')
+    $(this).parent().find('span:first').toggleClass('glyphicon-arrow-down');
 });
 
 

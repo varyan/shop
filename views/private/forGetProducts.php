@@ -12,7 +12,7 @@
     <?php foreach($productList as $list) {?>
         <li class="list-group-item" data-companyId="<?php echo $list['id']?>">
             <div class="row">
-                <form class="form-inline form" method="POST" action="">
+                <form class="form-inline form" method="POST" action="" >
                     <div class="form-group com-md-4">
                         <?php echo $list['productName']?>
                         <input name="id" type="text" value="<?php echo $list['id'] ?>" style="display: none" />

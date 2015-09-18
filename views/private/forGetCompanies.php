@@ -7,17 +7,30 @@
  */
 
 ?>
-<ul class="list-group col-md-10">
+<ul class="list-group col-md-10" >
+
+
+
+
+
+
+
+
+
+
+
+
     <?php if ($indexCompany) { ?>
-        <li class="list-group-item">
+        <li class="list-group-item" id="comp">
             <?php echo $indexCompany[0]['name']?>
             <a class="pull-right" href="<?= base_url('dashboard/createCompany/'.$indexCompany[0]['name']) ?>">Create Company</a>
         </li>
-    <?php } ?>
+    <?php } else { ?>
     <?php foreach($companyList as $list) {?>
         <li class="list-group-item" data-companyId="<?= $list['id']?>">
-            <?= $list['name']?>
+            <?= $list['companyName']?>
             <a class="pull-right" href="<?= base_url("dashboard/OpenCompanyPage/".$list['id']) ?>" > Select</a>
         </li>
+    <?php } ?>
     <?php } ?>
 </ul>

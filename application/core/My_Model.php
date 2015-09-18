@@ -154,7 +154,7 @@ class My_Model extends CI_Model {
      *  @return array
      *  -------------------------------------
      */
-    protected function selectLike($fields ="*", $like = false) {
+    protected function selectLike($fields = "*", $like = false) {
 
 
         $this->db->select($fields);

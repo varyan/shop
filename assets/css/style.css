@@ -6,7 +6,7 @@
     display: none;
 }
 
-#priceInput, #QtyInput {
+#priceInput, #QtyInput,#QtyInput1  {
     width: 60px;
 }
 
@@ -29,7 +29,7 @@ button[name='chooseItem'] {
 }
 
 .white {
-    background: burlywood;
+    background: #fff;
 }
 
 #step2 {
@@ -48,8 +48,6 @@ button[name='chooseItem'] {
 #back {
     display: none;
 }
-
-
 
 
 
