@@ -1,14 +1,8 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Karen
- * Date: 15.09.2015
- * Time: 16:23
- */
-?>
-
 <li class="list-group-item" data-companyId="<?php echo $product['id']?>">
     <div class="row">
+        <button type="button"  data-productRowId="<?= $this->session->row_id ?>" name="deleteProduct" class="deleteProduct">
+            <i class="glyphicon glyphicon-remove text-warning"></i>
+        </button>
         <form class="form-inline form" method="POST" action="">
             <div class="form-group com-md-4">
                 <?php echo $product['productName']?>

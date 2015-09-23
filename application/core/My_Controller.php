@@ -3,6 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class My_Controller extends CI_Controller {
 
+    protected $data = [];
+
     /**
      * ---------------------------------------
      * Call the parent class constructor

@@ -18,7 +18,33 @@
     <div class="row">
         <div id="selectedProducts" class="col-md-12">
             <ul class="list-group">
-
+                <?php foreach($this->cart->contents() as $key => $value): ?>
+                    <li class="list-group-item" data-companyId="<?php echo $value['id']?>">
+                        <div class="row">
+                            <button type="button"  data-productRowId="<?= $key ?>" name="deleteProduct" class="deleteProduct">
+                                <i class="glyphicon glyphicon-remove text-warning"></i>
+                            </button>
+                            <form class="form-inline form" method="POST" action="">
+                                <div class="form-group com-md-4">
+                                    <?php echo $value['name']; ?>
+                                </div>
+                                <div class="form-group pull-right col-md-1">
+                                    <button id="chooseItem1" type="submit" name="chooseItem1" class="">Edit</button>
+                                </div>
+                                <div class="form-group pull-right col-md-1">
+                                    $ <?= $value['price'] ?>
+                                </div>
+                                <div class="form-group pull-right col-md-2">
+                                    <label for="QtyInput1">Qty</label>
+                                    <input class="form-control input-sm" id="QtyInput1" type="text" value="<?= $value['qty'] ?>" name="qty" />
+                                </div>
+                                <div class="form-group pull-right">
+                                    Unit Price $: <?= $value['price'] ?>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
             </ul>
         </div>
     </div>

@@ -3,21 +3,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Dashboard extends My_Controller {
 
-
-    private $data = [];
-
-
     public function __construct() {
         parent::__construct();
         $this->load->model('company_model');
-        $this->load->model('product_model');
         $this->load->library('cart');
-        $this->__setDataParams();
+        $this->_set_data_params();
 
-        /*  $this->cart->destroy();
-            session_destroy(); */
+        /* $this->cart->destroy();
+         session_destroy();*/
     }
-
 
     /** -------------------------------------
      *  @param string (default index)
@@ -34,21 +28,24 @@ class Dashboard extends My_Controller {
         }
     }
 
-
     /** -------------------------------------
      *  Go to NewOrder page
      *  -------------------------------------
      */
-    public function newOrder() {
-        redirect(base_url('newOrder'));
+    public function new_order() {
+        redirect(base_url('new_order'));
     }
-
 
     /** -------------------------------------
      *  Go to NewOrder page
      *  -------------------------------------
      */
     public function cancel() {
+
+        $this->cart->destroy();
+        $this->session->unset_userdata('info');
+        $this->session->unset_userdata('company_id');
+        $this->session->unset_userdata('row_id');
         redirect(base_url('index'));
     }
 
@@ -57,60 +54,56 @@ class Dashboard extends My_Controller {
      * @param string
      *  -------------------------------------
      */
-    public function OpenCompanyPage($data) {
+    public function open_company_page($id) {
 
         if (!$this->session->companyId) {
             $this->session->set_userdata('companyId',NULL);
         }
 
-        $this->session->companyId = $data;
+        $this->session->companyId = $id;
 
-        redirect('CompanyPage');
+        redirect('company_page');
 
     }
 
     /** -------------------------------------
      * Create new Company and redirect to it's page
-     * @param string $comp_name
      *  -------------------------------------
      */
-    public function createCompany($comp_name) {
+    public function create_company() {
 
-        $this->company_model->createNewCompany($comp_name);
+        $this->company_model->create_new_company($this->input->post('value'));
 
         if (!$this->session->companyId) {
             $this->session->set_userdata('companyId',NULL);
         }
 
         $this->session->companyId = $this->db->insert_id();
-
-        redirect('CompanyPage');
-
     }
-
 
     /** --------------------------------------------------------------------------------
      * FUNCTIONS WHITCH ARE WORKNG WITH AJAX
      *  --------------------------------------------------------------------------------
      */
 
+
     /** -------------------------------------
      *  Working with ajax for show the all companies and current company name by input value
      *  -------------------------------------
      */
-    public function getCompanies() {
+    public function get_companies() {
 
-        $indexCompany = $this->company_model->getCompanyByName($_POST['value']);
+        $this->data['indexCompany'] = $this->company_model->get_company_by_name($_POST['value']);
 
-        if (!$indexCompany) {
-            $indexCompany[0]['name'] = $_POST['value'];
+        if (!$this->data['indexCompany']) {
+            $this->data['indexCompany'][0]['name'] = $_POST['value'];
         } else {
-            $indexCompany = false;
+            $this->data['indexCompany'] = false;
         }
 
-        $this->load->view('private/forGetCompanies', array(
+        $this->load->view('private/for_get_companies', array(
                 'companyList' => $this->data['companyList'],
-                'indexCompany' => $indexCompany
+                'indexCompany' => $this->data['indexCompany'],
             )
         );
     }
@@ -119,88 +112,28 @@ class Dashboard extends My_Controller {
      *  Working with ajax for show info from Company form in Ship To div#ship1
      *  -------------------------------------
      */
-    public function showCompanyInfo() {
-        $this->load->view('private/forship1', array('info' => $this->input->post()
-            )
-        );
-    }
+    public function show_company_info() {
+        $this->data['info'] = $this->input->post();
 
+        echo $this->json($this->data['info']);
+        /*$this->load->view('private/for_ship1', array('info' => $this->data['info']));*/
+    }
 
     /** -------------------------------------
      *  Working with ajax for show Order info
      *  -------------------------------------
      */
-    public function reviewOrder() {
-        $this->load->view('private/forReview');
+    public function review_order() {
+        $this->data['sess'] = $this->session->info;
+        $this->load->view('private/for_review',array('sess' => $this->data['sess']));
     }
 
-    /** -------------------------------------
-     *  Working with ajax for show products by input value
-     *  -------------------------------------
-     */
-    public function getProducts() {
-
-        $data = $this->input->post('value');
-
-        $this->load->view('private/forGetProducts', array(
-                'productList' => $this->product_model->getProducts($data)
-            )
-        );
-    }
-
-    /** -------------------------------------
-     *  Working with ajax for show current product
-     *  -------------------------------------
-     */
-    public function selectProduct() {
-
-        $data = array(
-            'id'      => $this->input->post('id'),
-            'qty'     => $this->input->post('qty'),
-            'price'   => $this->input->post('price'),
-            'name'    => $this->input->post('productName'),
-            'totalDiscount' => 0,
-            'totalDiscountType' => 'money',
-            'tax' => 0,
-            'shippingPrice' => 0,
-            'shippingDiscount' => 0,
-            'shippingDiscountType' => 'money'
-
-        );
-
-        $this->cart($data);
-
-        $response = $this->input->post();
-        $this->load->view('private/forSelectProduct', array(
-                'product' => $response
-            )
-        );
-    }
-    public function setQty() {
-        $this->changeCart('qty', $this->input->post('value'));
-    }
-
-    /** -------------------------------------
-     *
-     *  -------------------------------------
-     */
-    public function setOtherParams() {
-
-        $this->changeCart('totalDiscount',$this->input->post('totalDiscount'));
-        $this->changeCart('totalDiscountType',$this->input->post('totalDiscountType'));
-        $this->changeCart('tax',$this->input->post('tax'));
-        $this->changeCart('shippingPrice',$this->input->post('shippingPrice'));
-        $this->changeCart('shippingDiscount',$this->input->post('shippingDiscount'));
-        $this->changeCart('shippingDiscountType',$this->input->post('shippingDiscountType'));
-
-        echo $this->input->post('shippingPrice');
-    }
 
     /** -------------------------------------
      *  Process and validate FORM
      *  -------------------------------------
      */
-    public function processingForm() {
+    public function processing_form() {
 
 
         if ($this->validate(array(
@@ -337,9 +270,13 @@ class Dashboard extends My_Controller {
             )
         ) {
 
+            $arr = [];
             foreach($this->input->post() as $key => $value) {
-                $this->session->set_userdata($key, $value);
+               $arr[$key] = $value;
             };
+
+            $this->session->set_userdata('info', $arr);
+
 
             echo $this->json(array(),'Success', 'SUCCESS');
         } else {
@@ -352,12 +289,15 @@ class Dashboard extends My_Controller {
      *  Create order using cart-info and form-info
      *  -------------------------------------
      */
-    public function createOrder() {
-        /*MUST FILL THE DATABASE then redirect*/
-        /*$this->session->destroy();*/
+    public function create_order() {
+
+        $this->company_model->create_order($this->input->post());
+
 
         $this->cart->destroy();
-        session_destroy();
+        $this->session->unset_userdata('info');
+        $this->session->unset_userdata('companyId');
+        $this->session->unset_userdata('row_id');
         redirect('index');
     }
 
@@ -366,32 +306,9 @@ class Dashboard extends My_Controller {
      *  SET $data parameters for any action
      *  -------------------------------------
      */
-    private function __setDataParams() {
+    private function _set_data_params() {
         $this->data = array(
-            'companyList' => $this->company_model->getCompanyList(),
-        );
-    }
-
-    /** -------------------------------------
-     *  Open Cart and Fill
-     *  -------------------------------------
-     */
-    private function cart($data) {
-        $row_id = $this->cart->insert($data);
-        $this->session->set_userdata('row_id',$row_id);
-    }
-
-    /** -------------------------------------
-     *  change Cart
-     * @param string
-     * @param array
-     *  -------------------------------------
-     */
-    private function changeCart($row,$data) {
-        $this->cart->update(array(
-                'rowid' => $this->session->userdata('row_id'),
-                $row => $data
-            )
+            'companyList' => $this->company_model->get_company_list(),
         );
     }
 }

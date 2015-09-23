@@ -4,6 +4,45 @@
     <div class="openform col-md-12">
         <div class="row well-lg">
             <div id="ship1" class="col-md-5 white">
+                <fieldset>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="shipCompanyName"> Company Name</label>
+                        <div class="col-md-5">
+                            <input id="shipCompanyName" name="shipCompanyName" type="text" placeholder="" class="form-control input-md">
+                            <p><?php echo form_error('shipCompanyName'); ?></p>
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="shipContactName"> Contact Name</label>
+                        <div class="col-md-5">
+                            <input id="shipContactName" name="shipContactName" type="text" class="form-control input-md">
+                            <p><?php echo form_error('shipContactName'); ?></p>
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="shipCompanyPhone">Phone Number</label>
+                        <div class="col-md-5">
+                            <input id="shipCompanyPhone" name="shipCompanyPhone" type="text" class="form-control input-md">
+                            <p><?php echo form_error('shipCompanyPhone'); ?></p>
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="shipEmail">Email</label>
+                        <div class="col-md-5">
+                            <input id="shipEmail" name="shipEmail" type="text" class="form-control input-md" >
+                            <p><?php echo form_error('shipEmail'); ?></p>
+                        </div>
+                    </div>
+
+                </fieldset>
             </div>
             <div id="ship2" class="col-md-5 col-md-offset-1 white">
                 <fieldset>
@@ -49,7 +88,7 @@
 
                     <!-- Text input-->
                     <div class="form-group">
-                        <!--<label class="col-md-4 control-label" for="shipZip">* Zip</label>-->
+                        <label class="col-md-4 control-label" for="shipZip">* Zip</label>
                         <div class="col-md-5">
                             <input id="shipZip" name="shipZip" type="text" placeholder="" class="form-control input-md">
                             <p><?php echo form_error('shipZip'); ?></p>

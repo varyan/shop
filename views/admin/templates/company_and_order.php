@@ -135,7 +135,6 @@
                             <p><?php echo form_error('contactExt'); ?></p>
                         </div>
                     </div>
-
                     <!-- Multiple Checkboxes -->
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="contactPrimary">Primary Contact</label>

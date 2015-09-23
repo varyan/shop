@@ -1,7 +1,5 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Karen
- * Date: 18.09.2015
- * Time: 12:40
- */
+<script type="text/javascript" src="<?php echo base_url('assets/js/bootstrap.js')?>"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,1 @@
+<p>This is the customer info page <?= $order_id ?></p>

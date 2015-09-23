@@ -32,7 +32,7 @@ $('#next').click(function() {
             $.ajax({
                 type: "post",
                 data: sendData,
-                url: 'http://localhost/shop/dashboard/processingForm',
+                url: 'dashboard/processing_form',
                 dataType: 'json',
                 success: function(response) {
                     $('#processing').html('<p>'+ response['message'] +'</p>');
@@ -40,14 +40,13 @@ $('#next').click(function() {
             });
 
             break;
-
         }
 
         case 4: {
             $.ajax({
                 type: "post",
                 data: {value:'true'},
-                url: 'http://localhost/shop/dashboard/reviewOrder',
+                url: 'dashboard/review_order',
                 dataType: 'html',
                 success: function(response) {
                     $('#step3').html(response);
@@ -73,13 +72,19 @@ $('#back').click(function() {
     $('#submit').hide();
     $('#next').show();
     switch(step) {
+        case 4: {
+            step--;
+            $('#step3').show();
+            $('#step4').hide();
+            break;
+        }
+
         case 3: {
             step--;
             $('#processing').html(" ");
-            $('#step3').html(' ');
+            $('#step3').html(' ').hide();
             $('#step1').hide();
             $('#step2').show();
-            $('#step3').hide();
             break;
         }
 
@@ -100,8 +105,27 @@ $('#back').click(function() {
     }
 });
 
-$('#submit').click(function () {
-    step = 1;
+
+/**
+ * ----------------------------------------------
+ *  Other Actions
+ * ----------------------------------------------
+ * */
+var submit = true
+ $('#submit').click(function (e) {
+     if (submit == true) {
+         e.preventDefault();
+         step++ ;
+         $("#step3").hide();
+         $("#step4").show();
+         $('#submit').hide();
+     };
+
+     submit = false;
+});
+
+$('#done').click(function() {
+    $('#submit').trigger('click');
 });
 
 if (step == 1) {

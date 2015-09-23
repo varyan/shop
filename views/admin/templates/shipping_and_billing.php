@@ -35,8 +35,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="shipingStartDate">Start Ship Date</label>
                         <div class="col-md-5">
-                            <input id="shipingStartDate" name="shipingStartDate" type="text" placeholder="" class="form-control input-md">
-
+                            <input type="date" id="shipingStartDate" name="shipingStartDate" class="form-control"/>
                         </div>
                     </div>
 
@@ -44,8 +43,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="shipingEndDate">Ship End Date</label>
                         <div class="col-md-5">
-                            <input id="shipingEndDate" name="shipingEndDate" type="text" placeholder="" class="form-control input-md">
-
+                            <input type="date" id="shipingEndDate" name="shipingEndDate" class="form-control"/>
                         </div>
                     </div>
 

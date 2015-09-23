@@ -64,8 +64,8 @@
                         <label class="col-md-4 control-label" for="additionalB2BorB2C">B2B or B2C</label>
                         <div class="col-md-5">
                             <select id="additionalB2BorB2C" name="additionalB2BorB2C" class="form-control">
-                                <option value="Option one">Option one</option>
-                                <option value="Option two">Option two</option>
+                                <option value="b2c">B2C</option>
+                                <option value="b2b">B2B</option>
                             </select>
                         </div>
                     </div>

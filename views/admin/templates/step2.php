@@ -4,7 +4,7 @@
         <div id="processing">
             <!-- PRINT SOME INFO ABOUT PROCESSING FORM-->
         </div>
-        <form class="form-horizontal" id="shopInfo" action="<?= base_url('dashboard/createOrder') ?>" method="post">
+        <form class="form-horizontal" id="shopInfo" action="<?= base_url('dashboard/create_order') ?>" method="post">
             <ul class="list-group">
                 <!--BEGIN Company and Order fieldset-->
                 <?php $this->load->view('admin/templates/company_and_order'); ?>

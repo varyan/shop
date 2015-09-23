@@ -20,7 +20,7 @@ class My_Model extends CI_Model {
 
         if($table) {
             $this->_table = $table;
-            $this->setTable($table);
+            $this->set_table($table);
         }
 
         $this->load->database();
@@ -28,7 +28,6 @@ class My_Model extends CI_Model {
 
 
     /** -------------------------------------
-     *  @param string
      *  @param array
      *  @return boolean
      *  -------------------------------------
@@ -125,7 +124,7 @@ class My_Model extends CI_Model {
      *  @return array
      *  -------------------------------------
      */
-    protected function selectJoin($data) {
+    protected function select_join($data) {
 
         $fields = '';
 
@@ -154,7 +153,7 @@ class My_Model extends CI_Model {
      *  @return array
      *  -------------------------------------
      */
-    protected function selectLike($fields = "*", $like = false) {
+    protected function select_like($fields = "*", $like = false) {
 
 
         $this->db->select($fields);
@@ -179,7 +178,7 @@ class My_Model extends CI_Model {
      *  @param string
      *  -------------------------------------
      */
-    protected function setTable($table) {
+    protected function set_table($table) {
         $this->_table = $table;
     }
 

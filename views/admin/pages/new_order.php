@@ -1,31 +1,10 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Karen
- * Date: 14.09.2015
- * Time: 10:29
- */
-?>
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-
-    <link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrap.css')?>"/>
-    <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css')?>"/>
-</head>
-<body>
 <!-- --------------END HEAD TAG -------------- -->
 
 <div class="container">
     <header>
         <div class="row">
             <div class="col-md-3">
-                <a class="btn btn-default" href="#" role="button">Cancel</a>
-            </div>
-            <div class="col-md-3 pull-right">
-                <button class="btn btn-success pull-right" type="button">Next</button>
+                <a class="btn btn-default" href="<?= base_url('index')?>" role="button">Cancel</a>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -68,12 +47,6 @@
     <!-- -------------- END SHOW COMPANIES -------------- -->
 </div>
     <!-- -------------- END CONTAINER-------------- -->
-
-<script type="text/javascript" src="<?php echo base_url('assets/js/jquery-1.11.3.min.js')?>"></script>
-<script type="text/javascript" src="<?php echo base_url('assets/js/bootstrap.js')?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/ajax.js')?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/js/customer/customerPage.js')?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/scripts.js')?>"></script>
-
-</body>
-</html>
-

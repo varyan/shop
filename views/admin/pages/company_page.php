@@ -1,21 +1,14 @@
-<?php
-/*$sess = ($this->session);
-echo "<pre>";
-print_r($this->cart->contents());
-echo "</pre>";*/
-?>
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-
-    <link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrap.css')?>"/>
-    <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css')?>"/>
-</head>
-<body>
 <!-- --------------END HEAD TAG -------------- -->
+<?php
+/*    echo "<pre>";
+    print_r($this->cart->contents());
+    echo "</pre>";
+echo "<pre>";
+print_r($this->session->all_userdata());
+echo "</pre>";
+*/
 
+?>
 <div class="container">
     <header>
         <div class="row">
@@ -58,18 +51,19 @@ echo "</pre>";*/
             <div id="step3"></div>
         </div>
         <!-- -------------- END STEP 3 -------------- -->
+        <!-- -------------- BEGIN STEP 4 -------------- -->
+        <div class="row">
+            <div id="step4" class="text-center">
+                <button id="proccessOrder" class="btn btn-success">Proccess Order</button>
+                <button id="done" class="btn btn-success">DONE</button>
+            </div>
+        </div>
+        <!-- -------------- END STEP 4 -------------- -->
     </div>
 </div>
 <!-- -------------- END CONTAINER-------------- -->
-
-<script type="text/javascript" src="<?php echo base_url('assets/js/jquery-1.11.3.min.js')?>"></script>
-<script type="text/javascript" src="<?php echo base_url('assets/js/bootstrap.js')?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/companyPageAjax.js')?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/scripts.js')?>"></script>
-
-</body>
-</html>
-
 
 
 

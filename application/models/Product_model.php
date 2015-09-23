@@ -16,8 +16,8 @@ class Product_model extends My_Model {
      *  Get products list using My_model select with like
      *  -------------------------------------
      */
-    public function getProducts($data) {
-        return $this->selectLike('*', array(
+    public function get_products($data) {
+        return $this->select_like('*', array(
                 'productName' => $data
             )
         );
