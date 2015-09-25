@@ -9,8 +9,10 @@ class Dashboard extends My_Controller {
         $this->load->library('cart');
         $this->_set_data_params();
 
-        /* $this->cart->destroy();
-         session_destroy();*/
+        /*
+          $this->cart->destroy();
+          session_destroy();
+        */
     }
 
     /** -------------------------------------
@@ -46,6 +48,7 @@ class Dashboard extends My_Controller {
         $this->session->unset_userdata('info');
         $this->session->unset_userdata('company_id');
         $this->session->unset_userdata('row_id');
+        $this->session->unset_userdata('order_id');
         redirect(base_url('index'));
     }
 
@@ -137,69 +140,69 @@ class Dashboard extends My_Controller {
 
 
         if ($this->validate(array(
-            array(
-                'companyName','companyName','required'
-            ),
-            array(
-                'companyPhone', 'companyPhone', 'numeric'
-            ),
-            array(
-                'companyExt','companyExt','numeric'
-            ),
-            array(
-                'companyFax','companyFax','numeric'
-            ),
-            array(
-                'companyCustomer', 'companyCustomer','required'
-            ),/*
+                array(
+                    'companyName','companyName','required'
+                ),
+                array(
+                    'companyPhone', 'companyPhone', 'numeric'
+                ),
+                array(
+                    'companyExt','companyExt','numeric'
+                ),
+                array(
+                    'companyFax','companyFax','numeric'
+                ),
+                array(
+                    'companyCustomer', 'companyCustomer','required'
+                ),/*
                     array(
                         'companyNotes', 'companyNotes',
                     ),
                     array(
                         'companyAdminNotes', 'companyAdminNotes',
                     ),*/
-            array(
-                'contactFname','contactFname','required'
-            ),
-            array(
-                'contactLname','contactLname','required'
-            ),
-            array(
-                'contactEmail', 'contactEmail','required|valid_email'
-            ),/*
+                array(
+                    'contactFname','contactFname','required'
+                ),
+                array(
+                    'contactLname','contactLname','required'
+                ),
+                array(
+                    'contactEmail', 'contactEmail','required|valid_email'
+                ),/*
                     array(
                         'contactTitle', 'contactTitle',
                     ),*/
-            array(
-                'contactPhone', 'contactPhone','numeric'
-            ),
-            array(
-                'contactExt','contactExt','numeric'
-            ),
-            array(
-                'shipAddress1','shipAddress1','required'
-            ),/*
+                array(
+                    'contactPhone', 'contactPhone','numeric'
+                ),
+                array(
+                    'contactExt','contactExt','numeric'
+                ),
+                array(
+                    'shipAddress1','shipAddress1','required'
+                ),/*
                     array(
                         'shipAddress2','shipAddress2',
                     ),*/
-            array(
-                'shipCity','shipCity','required'
-            ),
-            array(
-                'shipState','shipState','required'
-            ),
-            array(
-                'shipZip','shipZip','required|numeric'
-            ),/*
+                array(
+                    'shipCity','shipCity','required'
+                ),
+                array(
+                    'shipState','shipState','required'
+                ),
+                array(
+                    'shipZip','shipZip','required|numeric'
+                ),/*
                     array(
                         'shipCountry','shipCountry',
                     ),*/
-            array(
-                'shipingCenter','shipingCenter','required'
-            ),
-            array(
-                'shippingType','shippingType','required'
-            ),/*
+                array(
+                    'shipingCenter','shipingCenter','required'
+                ),
+                array(
+                    'shippingType','shippingType','required'
+                ),/*
                     array(
                         'shipingStartDate','shipingStartDate',
                     ),
@@ -212,33 +215,33 @@ class Dashboard extends My_Controller {
                     array(
                         'billingPaymentTerms','billingPaymentTerms',
                     ),*/
-            array(
-                'billingPermentType','billingPermentType','required'
-            ),
-            array(
-                'paymentNameOnCard','paymentNameOnCard','required'
-            ),
-            array(
-                'paymentCardName','paymentCardName','required'
-            ),
-            array(
-                'paymentSecurityCode','paymentSecurityCode','required|numeric'
-            ),
-            array(
-                'paymentBillingAddress','paymentBillingAddress','required'
-            ),
-            array(
-                'paymentCity','paymentCity','required'
-            ),
-            array(
-                'paymentState','paymentState','required'
-            ),
-            array(
-                'paymentZip','paymentZip','required|numeric'
-            ),
-            array(
-                'paymentExpDate','paymentExpDate','required'
-            ),/*
+                array(
+                    'billingPermentType','billingPermentType','required'
+                ),
+                array(
+                    'paymentNameOnCard','paymentNameOnCard','required'
+                ),
+                array(
+                    'paymentCardName','paymentCardName','required'
+                ),
+                array(
+                    'paymentSecurityCode','paymentSecurityCode','required|numeric'
+                ),
+                array(
+                    'paymentBillingAddress','paymentBillingAddress','required'
+                ),
+                array(
+                    'paymentCity','paymentCity','required'
+                ),
+                array(
+                    'paymentState','paymentState','required'
+                ),
+                array(
+                    'paymentZip','paymentZip','required|numeric'
+                ),
+                array(
+                    'paymentExpDate','paymentExpDate','required'
+                ),/*
                     array(
                         'paymentDefaultCard','paymentDefaultCard',
                     ),
@@ -266,13 +269,13 @@ class Dashboard extends My_Controller {
                     array(
                         'additionalResellerNumber','additionalResellerNumber',
                     )*/
-                 )
             )
+        )
         ) {
 
             $arr = [];
             foreach($this->input->post() as $key => $value) {
-               $arr[$key] = $value;
+                $arr[$key] = $value;
             };
 
             $this->session->set_userdata('info', $arr);

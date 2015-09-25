@@ -5,6 +5,7 @@ class Main extends My_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('main_model');
+
     }
 
     /** -------------------------------------
@@ -31,19 +32,18 @@ class Main extends My_Controller {
     /**
      * -------------------------------------
      * show orders in index page for b2b or b2c
-     * @param string (b2b / b2c)
      * -------------------------------------
      */
 
-    public function show_orders($type){
+    public function show_orders(){
 
-        $this->data['orders'] = $this->main_model->getOrdersByType($type);
+        $this->data['orders'] = $this->main_model->getOrdersByType($this->input->post('type'));
 
-        if ($type == 'b2c') {
+        if ($this->input->post('type') == 'b2c') {
 
             $this->load->view('private/order/for_show_orders_b2c', array('orders' => $this->data['orders']));
         } else {
-            $this->load->view('private/order/for_show_orders_b2b');
+            $this->load->view('private/order/for_show_orders_b2b', array('orders' => $this->data['orders']));
         }
     }
 

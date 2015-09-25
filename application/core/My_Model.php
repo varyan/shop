@@ -182,4 +182,26 @@ class My_Model extends CI_Model {
         $this->_table = $table;
     }
 
+    /** -------------------------------------
+     *  @param string
+     *  @param string
+     *  @param string
+     *  @param array
+     *  @return array
+     */
+    protected function join($row, $table, $on, $where = false) {
+        $this->db->select($row);
+        $this->db->from($this->_table);
+        $this->db->join($table, $on);
+
+        if ($where) {
+            $this->db->where($where);
+        }
+
+        $response = $this->db->get();
+
+
+        return $response->result_array();
+    }
+
 }

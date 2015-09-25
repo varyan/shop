@@ -3,6 +3,7 @@
     <div id="orderStep2">
         <?php foreach($this->session->order['order_id'] as $item): ?>
             <div class="orders">
+                <span> <?= $item ?> </span>
                 <a href="#" data-id="<?= $item ?>" class="pull-right openBox">USPS shopping $</a>
                 <div class="boxOptions">
 
@@ -49,6 +50,7 @@
                     <!-- END SHIPMENT INFO and SHIP TO -->
                 </div>
             </div>
+            <div class="clearfix"></div>
         <?php endforeach; ?>
     </div>
 </div>

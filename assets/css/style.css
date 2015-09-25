@@ -58,7 +58,7 @@ button[name='chooseItem'] {
 }
 
 #show_orders {
-    border: 1px solid red;
+
 }
 
 .deleteProduct {
@@ -74,6 +74,11 @@ button[name='chooseItem'] {
 
 #forStep2:hover {
     cursor: pointer;
+}
+
+/*SHIPPING BOX*/
+.deleteBox  {
+    border-radius: 100%;
 }
 
 /*FOR INDEX PAGE */

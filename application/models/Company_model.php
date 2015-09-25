@@ -85,6 +85,7 @@ class Company_model extends My_Model {
 
 
         $insert = array(
+            "companyId"=> $table_rows_id['companyId'],
             "shipAddress1" => $data['shipAddress1'],
             "shipAddress2"  => $data['shipAddress2'],
             "shipCity" => $data['shipCity'],
@@ -106,6 +107,7 @@ class Company_model extends My_Model {
 
 
         $insert = array(
+            "companyId" => $table_rows_id['companyId'],
             "billingPONumber" => $data['billingPONumber'],
             "billingPaymentTerms"  => $data['billingPaymentTerms'],
             "billingPermentType" => $data['billingPermentType'],
@@ -116,6 +118,7 @@ class Company_model extends My_Model {
 
 
         $insert = array(
+            "companyId" => $table_rows_id['companyId'],
             "paymentNameOnCard" => $data['paymentNameOnCard'],
             "paymentCardName" => $data['paymentCardName'],
             "paymentSecurityCode" => $data['paymentSecurityCode'],
@@ -140,7 +143,8 @@ class Company_model extends My_Model {
             "additionalB2BorB2C"  => $data['additionalB2BorB2C'],
             "additionalLeadSource" => $data['additionalLeadSource'],
             "additionalResellerNumber"  => $data['additionalResellerNumber'],
-            'companyId' => $table_rows_id['companyId']
+            'companyId' => $table_rows_id['companyId'],
+            'additionalCreationDate' => date('j-n-Y-H:s', time())
         );
         $this->set_table('additional');
         $this->insert($insert);
@@ -166,7 +170,7 @@ class Company_model extends My_Model {
                 $insert[$key] = $value;
             }
             $insert['orderId'] = $table_rows_id['orderId'];
-
+            $insert['companyId'] = $table_rows_id['companyId'];
             $this->insert($insert);
         }
      }

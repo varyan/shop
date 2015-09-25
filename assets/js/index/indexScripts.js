@@ -5,19 +5,12 @@ $(document).ready(function (){
      * ----------------------------------------------
      * */
 
-    $(document).on('click','#b2c', function() {
+    $(document).on('click','#b2c, #b2b', function() {
+        var self = $(this);
         $.ajax({
-            url: 'main/show_orders/b2c',
-            dataType: 'html',
-            success: function(response) {
-                $('#show_orders').html(response);
-            }
-        });
-    });
-
-    $(document).on('click','#b2b', function() {
-        $.ajax({
-            url: 'main/show_orders/b2b',
+            url: 'main/show_orders',
+            type: 'post',
+            data: {type:self.data('type')},
             dataType: 'html',
             success: function(response) {
                 $('#show_orders').html(response);
