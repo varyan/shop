@@ -48,7 +48,7 @@ class Dashboard extends My_Controller {
         $this->session->unset_userdata('info');
         $this->session->unset_userdata('company_id');
         $this->session->unset_userdata('row_id');
-        $this->session->unset_userdata('order_id');
+        $this->session->unset_userdata('order');
         redirect(base_url('index'));
     }
 

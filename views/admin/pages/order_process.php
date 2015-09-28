@@ -1,11 +1,15 @@
 <!-- -------------- END HEADER LAYOUT -------------- -->
-
+<?php
+    echo "<pre>";
+    print_r($this->session->order);
+    echo "</pre>";
+?>
 <div class="container">
     <header>
         <div class="row">
             <div class="col-md-3">
                 <button id="orderBack" class="btn btn-default" type="button">Back</button>
-                <a class="btn btn-default" href="<?= base_url('index') ?>" role="button" id="orderCancel">Cancel</a>
+                <a class="btn btn-default" href="<?= base_url('dashboard/cancel') ?>" role="button" id="orderCancel">Cancel</a>
             </div>
             <div class="col-md-3 pull-right">
                 <button id="orderNext" class="btn btn-success pull-right" type="button">Next</button>
@@ -31,7 +35,7 @@
 
     <?php $this->load->view('admin/templates/order/order_step1') ?>
 
-    <?php $this->load->view('admin/templates/order/order_step2') ?>
+    <?php $this->load->view('admin/templates/order/order_step2', array()) ?>
 
     <?php $this->load->view('admin/templates/order/order_step3') ?>
 

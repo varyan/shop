@@ -15,10 +15,11 @@
                         <div class="col-md-6"></div>
                         <div class="col-md-6 pull-right">
                             <h2>Box Configuration</h2>
-                            <div><!--OPEN MODAL BUTTON--> Add Box </div>
+                            <button type="button" class="btn btn-success pull-right">Add Box</button>
+                            <div class="clearfix"></div>
                             <div class="row">
-                                <div class="col-md-12">
-
+                                <div class="col-md-12 boxForOrder">
+                                    DEFAULT Selected BOX
                                 </div>
                             </div>
                         </div>

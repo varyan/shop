@@ -81,6 +81,10 @@ $(document).ready(function() {
             }
         });
 
+        /** -------------------------------------
+         *  Open .openBox and set default box info
+         *  -------------------------------------
+         */
         $(document).on('click','.openBox', function(e) {
             var self = $(this);
             e.preventDefault();
@@ -96,13 +100,39 @@ $(document).ready(function() {
                 }
             });
             self.next('.boxOptions').find('.aaa').attr('value',self.data('id'));
+
+            $.ajax({
+                url: 'order/get_box',
+                type: 'post',
+                data: {id:$(this).data('id')},
+                dataType: 'html',
+                success: function(response) {
+                    self.next('.boxOptions').find('.boxForOrder').html(response);
+                }
+            });
+
         });
+
+
+        $(document).on('click', '.deleteBox', function() {
+            var self = $(this);
+            $.ajax({
+                url: 'order/delete_box',
+                type: 'post',
+                data: {boxId:self.data('boxid'), orderId:self.closest('.boxOptions').prev('.openBox').data('id')},
+                success:function() {
+                    alert('success');
+                }
+            })
+        });
+
+
+
+
 
         $('#forStep2').click(function() {
             $("#orderNext").trigger("click");
-
         });
-
 
     }
 );

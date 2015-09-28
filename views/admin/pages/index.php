@@ -44,7 +44,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="#" id="products">
                                 Products
                             </a>
                         </li>
@@ -85,3 +85,4 @@
 <script type="text/javascript" src="<?php echo base_url('assets/js/index/indexScripts.js')?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/customer/customerPage.js')?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/boxes/boxesScripts.js')?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/js/products/productScripts.js')?>"></script>

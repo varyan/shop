@@ -6,5 +6,5 @@
             <input type="checkbox" name="order_id[]" value="<?= $item['orderId'] ?>"/>
             <span>Order Number: #<?= $item['orderId'] ?></span>
         </div>
-    <?php endforeach; ?>[
+    <?php endforeach; ?>
 </form>

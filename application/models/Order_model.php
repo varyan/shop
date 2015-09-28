@@ -13,9 +13,22 @@ class Order_model extends My_Model {
 
 
     /** -------------------------------------
-     *  AJAX FUNCTIONS
+     *  Get Box
      *  -------------------------------------
      */
+    public function get_box($orderId) {
+        $this->set_table('box');
+        return $this->join('box.*', 'orderBox', 'box.boxId = orderBox.boxId', array('orderBox.orderId' => $orderId ));
+    }
+
+    /** -------------------------------------
+     *  Delete Box
+     *  -------------------------------------
+     */
+    public function delete_box($boxId, $orderId) {
+        $this->set_table('OrderBox');
+        $this->delete(array('boxId' => $boxId, 'orderId' => $orderId));
+    }
 
 
     /** -------------------------------------
@@ -32,6 +45,9 @@ class Order_model extends My_Model {
 
         return $query->result_array();
     }
+
+
+
 
 
 }

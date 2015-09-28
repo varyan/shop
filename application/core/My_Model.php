@@ -188,8 +188,9 @@ class My_Model extends CI_Model {
      *  @param string
      *  @param array
      *  @return array
+     *  -------------------------------------
      */
-    protected function join($row, $table, $on, $where = false) {
+    protected function join($row, $table, $on, $where = null) {
         $this->db->select($row);
         $this->db->from($this->_table);
         $this->db->join($table, $on);
